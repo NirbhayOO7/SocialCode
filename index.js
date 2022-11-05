@@ -7,6 +7,10 @@ const port = 8000;
 // middleware is used, below line will route any request(/) to routes folder
 app.use('/', require('./routes'));
 
+app.set('view engine', 'ejs');
+
+app.use('/views', './views');
+
 app.listen(port, function(err){
     if(err)
     {
