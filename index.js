@@ -1,9 +1,10 @@
+const { request } = require('express');
 const express = require('express');
 const app = express();
 const port = 8000;
 
 // use express routes
-
+// middleware is used, below line will route any request(/) to routes folder
 app.use('/', require('./routes'));
 
 app.listen(port, function(err){
