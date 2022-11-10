@@ -3,6 +3,11 @@ const express = require('express');
 const app = express();
 const port = 8000;
 
+// import express-ejs-layouts module before processing the request made by browser since we have to render the layout page in response to that request 
+const expressLayouts = require('express-ejs-layouts');
+
+app.use(expressLayouts);
+
 app.set('view engine', 'ejs');
 
 app.set('/views', './views');

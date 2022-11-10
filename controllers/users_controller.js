@@ -1,5 +1,6 @@
 module.exports.profile = function(req, res){
     return res.render('users',{
-        username : "Nirbhay"
+        username : "Nirbhay",
+        title: "profile"
     })
 }
