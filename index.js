@@ -6,6 +6,13 @@ const port = 8000;
 // import express-ejs-layouts module before processing the request made by browser since we have to render the layout page in response to that request 
 const expressLayouts = require('express-ejs-layouts');
 
+// below line will set the expressjs to look for any static at below mentioned location like css js images and etc
+app.use(express.static('./assets'));
+
+// extract styles and scripts from sub pages into the layout 
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
 app.use(expressLayouts);
 
 app.set('view engine', 'ejs');
