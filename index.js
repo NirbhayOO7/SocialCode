@@ -2,6 +2,7 @@ const { request } = require('express');
 const express = require('express');
 const app = express();
 const port = 8000;
+const db = require('./config/mongoose');
 
 // import express-ejs-layouts module before processing the request made by browser since we have to render the layout page in response to that request 
 const expressLayouts = require('express-ejs-layouts');
