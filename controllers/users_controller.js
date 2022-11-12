@@ -51,9 +51,31 @@ module.exports.create = function(req, res){
         }
     });
 
-}
+};
 
 // sing in and create session 
 module.exports.createSession = function(req, res){
-    // todo Later 
-}
+
+    // find the user whether it existed or not in our db 
+    User.findOne({email: req.body.email}, function(err, user){
+        if(err){
+            console.log('Error in finding user in signing in'); return;
+        }
+
+        // if we found the user 
+        if(user){
+            if(user.password != req.body.password)
+            {
+                return res.redirect('back');
+            }
+            else
+            {
+                return res.redirect('/users/profile');
+            }
+        }
+        else
+        {
+            return res.redirect('back');
+        }
+    });
+};
