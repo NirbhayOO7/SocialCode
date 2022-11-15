@@ -1,10 +1,26 @@
 const User = require('../models/user');
 
 module.exports.profile = function(req, res){
-    return res.render('users',{
-        username : "Nirbhay",
-        title: "profile"
-    })
+    if(req.cookies.user_id)
+    {
+        User.findById(req.cookies.user_id, function(err, user){
+            if(user)
+            {
+                return res.render('users',{
+                    title: 'User',
+                    name: user.name
+                });
+            }
+            else
+            {
+                return res.redirect('/users/sign-in');
+            }
+        });
+    }
+    else
+    {
+        return res.redirect('/users/sign-in');
+    }
 };
 
 // render signIn page 
@@ -64,14 +80,16 @@ module.exports.createSession = function(req, res){
 
         // if we found the user 
         if(user){
+            // if password does not match 
             if(user.password != req.body.password)
             {
                 return res.redirect('back');
             }
-            else
-            {
-                return res.redirect('/users/profile');
-            }
+
+            // if password in matched in db 
+            res.cookie('user_id', user.id);
+
+            return res.redirect('/users/profile');
         }
         else
         {
