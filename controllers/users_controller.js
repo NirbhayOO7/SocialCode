@@ -9,6 +9,11 @@ module.exports.profile = function(req, res){
 
 // render signIn page 
 module.exports.signIn = function(req, res){
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_in', {
         title: 'SocailCode | Sign In'
     });
@@ -16,6 +21,11 @@ module.exports.signIn = function(req, res){
 
 // render signUp page 
 module.exports.signUp = function(req, res){
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_up', {
         title: 'SocailCode | Sign Un'
     });
@@ -56,4 +66,15 @@ module.exports.create = function(req, res){
 // sing in and create session 
 module.exports.createSession = function(req, res){
     return res.redirect('/');
+}
+
+//log-out of session
+module.exports.destroySession = function(req, res){
+    req.logout(function(err){
+        if(err){
+            console.log('Error while logging out of the session')
+        }
+
+        return res.redirect('/');
+    });
 }
