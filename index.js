@@ -16,9 +16,19 @@ const passportLocal = require('./config/passport-local-strategy');
 const expressLayouts = require('express-ejs-layouts');
 const { Store } = require('express-session');
 
-// install connect-mongo to use module connect-mongo, connect-mongo is used to store the session data in our mongo db 
+// install connect-mongo to use module connect-mongo, connect-mongo is used to store the session data in our mongo db we do this because whenever our server restart our web page should not delete the session info.
 const MongoStore = require('connect-mongo');
+// install node-sass-middleware to use scss in our webpage for styling.
+const sassMiddleware = require('node-sass-middleware'); 
 
+// we need to include sassMiddleware using middlware befor anything else ass we need the css files which converted from scss to be processed by other functionalites of server and then present it in the browser 
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug : true,
+    outputStyle:'extended',
+    prefix: '/css'
+}));
 
 // use middleware to setup cookieParser 
 app.use(cookieParser());
