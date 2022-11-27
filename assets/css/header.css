@@ -1,0 +1,18 @@
+header {
+  color: white;
+  background-color: #8a8ae8;
+  display: flex;
+  justify-content: space-between; }
+  header a {
+    color: white; }
+    header a:hover {
+      color: aquamarine; }
+  header #inner {
+    display: flex;
+    list-style: none; }
+  header li {
+    margin: 10px;
+    margin-top: 23px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder; }

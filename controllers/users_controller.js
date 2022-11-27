@@ -21,7 +21,8 @@ module.exports.signIn = function(req, res){
 
 // render signUp page 
 module.exports.signUp = function(req, res){
-    if(req.isAuthenticated())
+    // req.isAuthenticated is functionality of passport module 
+    if(req.isAuthenticated()) 
     {
         return res.redirect('/users/profile');
     }
@@ -70,6 +71,7 @@ module.exports.createSession = function(req, res){
 
 //log-out of session
 module.exports.destroySession = function(req, res){
+    // req.logout is a function of passport js 
     req.logout(function(err){
         if(err){
             console.log('Error while logging out of the session')

@@ -1,0 +1,13 @@
+footer{
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: rgb(63, 58, 58);
+
+    a{
+        color: white;
+        &:hover{
+            color: aquamarine;
+        }
+    }
+}

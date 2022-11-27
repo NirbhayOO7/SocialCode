@@ -1,2 +1,9 @@
-    <link rel="stylesheet" href="css/user_profile.css">
-    <h1>SocialCode / <%= title %></h1>
+<h1>SocialCode / <%= title %></h1>
+
+<section id="new-post">
+    <h4>Post</h4>
+    <form action="/post/create" id="new-post-form" method="post">
+        <textarea name="content" cols="30" rows="3" placeholder="type here..."></textarea>
+        <input type="submit" value="Post">
+    </form>
+</section>

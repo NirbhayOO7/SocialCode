@@ -1,3 +1,11 @@
 <footer>
-    Footer!
+    <div>
+        <h3>&copy; ProductionLine.All Rights Reserved</h3>
+    </div>
+    <% if(locals.user){ %>
+    <div>
+        <h3><a href="/">Home</a></h3>
+        <h3><a href="/users/profile">Profile</a></h3>
+    </div>
+    <% } %>
 </footer>

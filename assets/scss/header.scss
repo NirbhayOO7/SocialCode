@@ -1,0 +1,27 @@
+header{
+    color: white;
+    background-color: rgb(138, 138, 232);
+    display: flex;
+    justify-content: space-between;
+
+    a{
+        color: white;
+
+        &:hover{
+            color: aquamarine;
+        }
+    }
+
+    #inner{
+        display: flex;
+        list-style: none;
+    }
+
+    li{
+        margin: 10px;
+        margin-top: 23px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bolder;
+    }
+}

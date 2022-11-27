@@ -1,0 +1,9 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  background-color: #3f3a3a; }
+  footer a {
+    color: white; }
+    footer a:hover {
+      color: aquamarine; }
