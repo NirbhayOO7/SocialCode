@@ -7,7 +7,15 @@ module.exports.home = function(req, res){
     // res.cookie('user_id',20);
 
     // populate the user of each post 
-    Post.find({}).populate('user').exec(function(err, posts){
+    Post.find({})
+    .populate('user')
+    .populate({                    
+        path: 'comments',  // this is to populate the comments of each post
+        populate: {
+            path: 'user'  // this to populate the user of each comments.
+        }
+    })
+    .exec(function(err, posts){
         if(err){
             console.log(err.message);
             return;

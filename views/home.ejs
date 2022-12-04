@@ -4,7 +4,7 @@
     <% if(locals.user){ %>
     <h4>Post</h4>
     <form action="/post/create" id="new-post-form" method="post">
-        <textarea name="content" cols="30" rows="3" placeholder="type here..."></textarea>
+        <textarea name="content" cols="30" rows="3" placeholder="type here..." required></textarea>
         <input type="submit" value="Post">
     </form>
     <% } %>
@@ -13,6 +13,12 @@
             <% for(post of posts){ %>
                 <li>
                     <p>
+                        <% if(locals.user && locals.user.id == post.user.id) { %>
+                        <small>
+                            <!-- both post.id and post._id works as same as post.id will only mens converting the post._id to string -->
+                            <a href="/post/destroy/<%= post.id %>">X</a>      
+                        </small>
+                        <% } %>
                         <%= post.content %>
                         <br>
                         <small>
@@ -22,12 +28,32 @@
                     <div id="post-comments">
                         <% if(locals.user){ %>
                             <form action="/comments/create" method="POST">
-                                <input type="text" name="content" placeholder="type here to add comment...">
+                                <input type="text" name="content" placeholder="type here to add comment..." required>
                                 <input type="hidden" name="post" value="<%= post._id %>">
                                 <input type="submit" value="Add comment">
                             </form>
                         <% } %>
-                    </div> 
+
+                        <div id="post-comments-list">
+                            <ul id="post-comments-<%= post._id %>">
+                                <% for(comment of post.comments){%>
+                                    <p>
+                                        <% if(locals.user && locals.user.id == comment.user.id) { %>
+                                            <small>
+                                                <!-- both post.id and post._id works as same as post.id will only mens converting the post._id to string -->
+                                                <a href="/comments/destroy/<%= comment.id %>">X</a>      
+                                            </small>
+                                        <% } %>
+                                        <%= comment.content%>
+                                        <br>
+                                        <small>
+                                            <%= comment.user.name%>
+                                        </small>
+                                    </p>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
             <% } %>
         </ul>
