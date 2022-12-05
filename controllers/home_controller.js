@@ -1,5 +1,6 @@
 const { populate } = require('../models/post');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 module.exports.home = function(req, res){
     // console.log('home controller'+req.user);
@@ -20,9 +21,14 @@ module.exports.home = function(req, res){
             console.log(err.message);
             return;
         }
-        return res.render('home', {
-            title: "SocialCode | Home",
-            posts: posts
-        });
+
+        User.find({}, function(err, users){
+            return res.render('home', {
+                title: "SocialCode | Home",
+                posts: posts,
+                all_users: users            // user data is sent to homepage to show list of friends
+            });
+        })
+        
     });
 }
