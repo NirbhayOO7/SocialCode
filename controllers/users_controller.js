@@ -38,13 +38,16 @@ module.exports.signUp = function(req, res){
 module.exports.create = function(req, res){
     if(req.body.password != req.body.confirm_password)
     {
+        req.flash('error', 'password and confirm password does not match!');
         return res.redirect('back');
     }
 
     // findOne function will find an email in our database collection with email req.body.email and if found that document will be repersent by user
     User.findOne({email: req.body.email}, function(err, user){
         if(err){
-            console.log('Error in finding user in signing up'); return;
+            req.flash('error', err);
+            console.log('Error in finding user in signing up'); 
+            return res.redirect('back');
         }
 
         if(!user)
@@ -52,14 +55,18 @@ module.exports.create = function(req, res){
             User.create(req.body, function(err, user){
                 if(err)
                 {
-                    console.log('Error creating user while signing up'); return;
+                    req.flash('error', err);
+                    console.log('Error creating user while signing up'); 
+                    return res.redirect('back');
                 }
 
+                req.flash('success', 'User Id created!');
                 return res.redirect('/users/sign-in');
             })
         }
         else
         {
+            req.flash('error', 'Email already registered!');
             return res.redirect('back');
         }
     });
@@ -68,6 +75,7 @@ module.exports.create = function(req, res){
 
 // sing in and create session 
 module.exports.createSession = function(req, res){
+    req.flash('success', 'Logged in successfully');
     return res.redirect('/');
 }
 
@@ -79,6 +87,7 @@ module.exports.destroySession = function(req, res){
             console.log('Error while logging out of the session')
         }
 
+        req.flash('success', 'You have logged out!')
         return res.redirect('/');
     });
 }
@@ -89,6 +98,7 @@ module.exports.update = function(req, res){
     if(req.user.id == req.params.id){
 
         User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            req.flash('success', 'User profile updated!');
             return res.redirect('back');
         });
     }else{

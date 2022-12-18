@@ -20,6 +20,11 @@ const { Store } = require('express-session');
 const MongoStore = require('connect-mongo');
 // install node-sass-middleware to use scss in our webpage for styling.
 const sassMiddleware = require('node-sass-middleware'); 
+const { deserializeUser } = require('passport');
+const { Strategy } = require('passport-local');
+
+const flash = require('connect-flash'); // intall connect flash using npm, connect flash is used to show flash messages.
+const customMware = require('./config/middleware');  //we will use this to setup the flash message in 'res'( because in controllers we setup the flash messages in req)
 
 // we need to include sassMiddleware using middlware befor anything else ass we need the css files which converted from scss to be processed by other functionalites of server and then present it in the browser 
 app.use(sassMiddleware({
@@ -77,8 +82,13 @@ app.use(session({
 app.use(passport.initialize());
 // passport.session() is another middleware that alters the request object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
 app.use(passport.session());
-
+// passport.session is used to call deserializeUser function from passport-local-Strategy module to check the user which is currently sending the request 
+// and the id which will be sent to deserializeUser is the session id which is stored in cookies(which we save using serializedUser)
 app.use(passport.setAuthenticatedUser);
+
+// we will set flash to be used after we setup the session as flash usses session for storing the flash messages. 
+app.use(flash());
+app.use(customMware.setFlash);
 
 // use express routes
 // middleware is used, below line will route any request(/) to routes folder

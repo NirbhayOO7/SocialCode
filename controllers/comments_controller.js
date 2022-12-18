@@ -63,13 +63,17 @@ module.exports.create = async function(req, res){
 
             post.comments.push(comment); //push is a command of mongodb
             post.save(); //save tells the database that this is the final result save it in the database(before saving that data, that data is just present in memory).
-            res.redirect('/');   
+            req.flash('success','Comment added!');
+            return res.redirect('/');   
         }else{
+            req.flash('error','Post nod found!');
             return res.redirect('back');
         }
 
     }catch(err){
+        req.flash('error',err);
         console.log('Error', err);
+        return res.redirect('back');
     }
 }
 
@@ -85,13 +89,17 @@ module.exports.destroy = async function(req, res){
 
             comment.remove();
 
-            await Post.findByIdAndUpdate(postId,{ $pull: {comments: req.params.id}})
+            await Post.findByIdAndUpdate(postId,{ $pull: {comments: req.params.id}});
+            req.flash('success', 'comment deleted successfully!');
             return res.redirect('back');
         }else{
+            req.flash('error', 'comment not found!');
             return res.redirect('back');
         }
 
     }catch(err){
+        req.flash('error', err);
         console.log('Error', err);
+        return res.redirect('back');
     }
 };
