@@ -40,6 +40,7 @@ module.exports.home = async function(req, res){
 
     try{                                        // try and cath used for error handling.
         let post = await Post.find({})
+                        .sort('-createdAt')       //tosort the post acording to createdAt field, recent to oldest
                         .populate('user')
                         .populate({
                             path: 'comments',  // this is to populate the comments of each post

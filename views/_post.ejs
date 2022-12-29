@@ -1,9 +1,9 @@
-<li>
+<li id="post-<%= post._id %>">
     <p>
         <% if(locals.user && locals.user.id == post.user.id) { %>
         <small>
-            <!-- both post.id and post._id works as same as post.id will only mens converting the post._id to string -->
-            <a href="/post/destroy/<%= post.id %>">X</a>      
+            <!-- both post.id and post._id works as same as post.id will only means converting the post._id to string -->
+            <a class="delete-post-button" href="/post/destroy/<%= post.id %>">X</a>      
         </small>
         <% } %>
         <%= post.content %>
