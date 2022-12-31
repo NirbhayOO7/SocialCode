@@ -12,12 +12,14 @@
                 url: "/post/create",
                 data: newPostForm.serialize(),
                 success: function(data){           //this line data field is different from data mentioned in above line, here data constains the respose sent from the server from this url mentioned above
-                    let newPost = newPostDom(data.data.post);
+                    customSuccessNotification("Your post is published!");
+                    let newPost = newPostDom(data.data.post, data.user);
                     $('#post-list-container>ul').prepend(newPost);
                     deletePost(' .delete-post-button', newPost); // the space before .delete-post-button is neccessary as it defines that the class delete-post-button which is inside newPost object.
                 },
                 error: function(error){
                     console.log(error.responseText);
+                    customFailureNotification(error.responseText);
                 }
             })
         })
@@ -26,7 +28,7 @@
 
     // method to create a new post in DOM without loading the page again
 
-    let newPostDom = function(post){
+    let newPostDom = function(post, user){
         return $(`<li id="post-${post._id}">
         <p>
             <small>
@@ -36,7 +38,7 @@
             ${post.content}
             <br>
             <small>
-            ${post.user.name}
+            ${user}
             </small>
         </p>
         <div id="post-comments">
@@ -65,15 +67,41 @@
                 url: $(deleteLink).prop('href'),   // .prop() will return the value of property href present in deleteLink.
                 success: function(data){
                     $(`#post-${data.data.post_id}`).remove();
+                    customSuccessNotification("Post and associated comments deleted!");
                 },error: function(error){
-                    console.log(error.responseText)
+                    console.log(error.responseText);
+                    customFailureNotification(error.responseText);
                 }
             })
         })
     }
 
 
+    // function for noty 
+
+    let customSuccessNotification = function(message){
+        new Noty({
+            theme : 'relax' , 
+            text: message,
+            type: 'success',
+            layout : "topRight",
+            timeout : 1500
+            
+            }).show();
+    }
+
+    let customFailureNotification = function(message){
+        new Noty({
+            theme : 'relax' , 
+            text: message,
+            type: 'error',
+            layout : "topRight",
+            timeout : 1500
+            
+            }).show();
+    }
 
 
+    deletePost('.delete-post-button');
     createPost();
 }

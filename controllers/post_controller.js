@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const test = require('../config/middleware')
 
 // we will not convert below line of code async await as there is only 1 callback
 module.exports.create = async function(req, res){
@@ -14,6 +15,7 @@ module.exports.create = async function(req, res){
                 data: {
                     post: post
                 },
+                user: req.user.name,
                 message: "post created!"
             });
         }
