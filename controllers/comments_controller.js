@@ -63,6 +63,19 @@ module.exports.create = async function(req, res){
 
             post.comments.push(comment); //push is a command of mongodb
             post.save(); //save tells the database that this is the final result save it in the database(before saving that data, that data is just present in memory).
+            
+            if (req.xhr){
+                // Similar for comments to fetch the user's id!
+                comment = await comment.populate([{path:'user', select:'name'}]);   // this query will populate only the name of user not any other field of user. 
+    
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Comment created!"
+                });
+            }
+            
             req.flash('success','Comment added!');
             return res.redirect('/');   
         }else{
@@ -90,6 +103,17 @@ module.exports.destroy = async function(req, res){
             comment.remove();
 
             await Post.findByIdAndUpdate(postId,{ $pull: {comments: req.params.id}});
+
+            // send the comment id which was deleted back to the views
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
+
             req.flash('success', 'comment deleted successfully!');
             return res.redirect('back');
         }else{

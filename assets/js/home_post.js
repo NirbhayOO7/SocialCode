@@ -1,4 +1,4 @@
-{
+    {
     // method to submit the form data for new post using AJAX 
     let createPost = function(){
 
@@ -14,8 +14,10 @@
                 success: function(data){           //this line data field is different from data mentioned in above line, here data constains the respose sent from the server from this url mentioned above
                     customSuccessNotification("Your post is published!");
                     let newPost = newPostDom(data.data.post, data.user);
-                    $('#post-list-container>ul').prepend(newPost);
+                    $('#posts-list-container>ul').prepend(newPost);
                     deletePost(' .delete-post-button', newPost); // the space before .delete-post-button is neccessary as it defines that the class delete-post-button which is inside newPost object.
+                    // call the create comment class
+                    new PostComments(data.data.post._id);
                 },
                 error: function(error){
                     console.log(error.responseText);
@@ -101,7 +103,22 @@
             }).show();
     }
 
+    let convertPostsToAjax = function(){
 
-    deletePost('.delete-post-button');
+        $('#posts-list-container>ul>li').each(function(){
+            // console.log(this);
+            let self = $(this);
+            let deleteButton = $(' .delete-post-button', self);
+            deletePost(deleteButton);
+
+            // get the post's id by splitting the id attribute
+            let postId = self.prop('id').split("-")[1]
+            new PostComments(postId);
+        });
+    }
+
+    // deletePost('.delete-post-button');
     createPost();
+
+    convertPostsToAjax();
 }
