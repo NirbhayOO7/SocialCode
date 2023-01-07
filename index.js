@@ -90,6 +90,8 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMware.setFlash);
 
+app.use('/uploads', express.static(__dirname+'/uploads'));
+
 // use express routes
 // middleware is used, below line will route any request(/) to routes folder
 app.use('/', require('./routes'));

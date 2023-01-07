@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const path = require('path');
+const fs = require('fs');
 
 module.exports.profile = function(req, res){
     User.findById(req.params.id, function(err, user){
@@ -93,15 +95,56 @@ module.exports.destroySession = function(req, res){
 }
 
 // to update user info if user is loged in 
-module.exports.update = function(req, res){
+// module.exports.update = function(req, res){
+
+//     if(req.user.id == req.params.id){
+
+//         User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+//             req.flash('success', 'User profile updated!');
+//             return res.redirect('back');
+//         });
+//     }else{
+//         return res.status(401).send('Unauthorized');
+//     }
+// }
+
+
+// we will use async-await function for update
+
+module.exports.update = async function(req, res){
 
     if(req.user.id == req.params.id){
 
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-            req.flash('success', 'User profile updated!');
+        try{
+            let user = await User.findById(req.params.id);
+            // since now the enctype is multipart/form-data, we will not be able to access the body of form data directly by req.body 
+            // we will have to take the help of multer module functions 
+
+            User.uploadedAvatar(req, res, function(err){
+                if(err){console.log('****Multer error: ', err)}
+
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){ // since user have freedom to either upload the avatar or not, so we check if user have uploaded a file or not
+                    
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname , '..' , user.avatar));
+                    }
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+
+                user.save();
+                req.flash('success', 'profile updated!')
+                return res.redirect('back');
+            })
+        }catch(err){
+            req.flash('error', err);
             return res.redirect('back');
-        });
+        }
+
     }else{
+        req.flash('error', 'Unauthorized!');
         return res.status(401).send('Unauthorized');
     }
 }
