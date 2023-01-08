@@ -128,7 +128,7 @@ module.exports.update = async function(req, res){
 
                 if(req.file){ // since user have freedom to either upload the avatar or not, so we check if user have uploaded a file or not
                     
-                    if(user.avatar){
+                    if(user.avatar && fs.existsSync(path.join(__dirname , '..' , user.avatar))){
                         fs.unlinkSync(path.join(__dirname , '..' , user.avatar));
                     }
                     user.avatar = User.avatarPath + '/' + req.file.filename;
