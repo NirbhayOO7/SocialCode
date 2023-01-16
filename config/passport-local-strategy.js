@@ -17,6 +17,7 @@ passport.use(new LocalStrategy({
     // find the user and establish the authenticity
     function(req, email, password, done)
     {
+        // console.log('********Passport-local*******', req.user);
         User.findOne({email: email}, function(err, user){
 
             if(err)
@@ -38,14 +39,16 @@ passport.use(new LocalStrategy({
     }
 ));
 
-// serializing the user to decide which key is to be kept in cookies
+// serializing the user to decide which key is to be kept in session-cookies
 
 passport.serializeUser(function(user, done){
+    // console.log('********Passport-serialize*******');
     done(null, user._id);
 });
 
-// deserialize the user from the key in the cookies
+// deserialize the user from the key in the session-cookies
 passport.deserializeUser(function(id, done){
+    // console.log('********Passport-deSerialize*******');
     User.findById(id, function(err, user){
         if(err)
         {

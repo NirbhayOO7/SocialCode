@@ -54,7 +54,8 @@ app.set('view engine', 'ejs');
 
 app.set('/views', './views');
 
-// instruct app to use the session module to encrypt the cookies sent by browser 
+
+// encrypt the id which we save in the session cookie using serializeUser 
 app.use(session({
     name: 'socailcode',
     // todo change the secret befor deploying in production 
@@ -80,6 +81,7 @@ app.use(session({
 
 // passport.initialize() is a middle-ware that initialises Passport. 
 app.use(passport.initialize());
+// console.log('** in between**');
 // passport.session() is another middleware that alters the request object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
 app.use(passport.session());
 // passport.session is used to call deserializeUser function from passport-local-Strategy module to check the user which is currently sending the request 
