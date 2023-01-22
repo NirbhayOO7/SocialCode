@@ -12,6 +12,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const passportJwt = require('./config/passport-jwt-strategy');  // jwt stragtegy is used for user authentication as we can not use session-cookies in case of API calls. 
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 // import express-ejs-layouts module before processing the request made by browser since we have to render the layout page in response to that request 
 const expressLayouts = require('express-ejs-layouts');

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const passport = require('passport');
+const { OAuthStrategy } = require('passport-google-oauth');
 
 const router = express.Router();
 
@@ -17,5 +18,15 @@ router.post('/create-session', passport.authenticate(
 
 router.get('/sign-out',userController.destroySession);
 router.post('/update/:id', passport.checkAuthentication, userController.update);
+
+router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']})); // this call will sent the call to google for users vefication.
+//scope defines the data which we want from google to return after user verfication is done out server.
+router.get('/auth/google/callback', passport.authenticate(
+    'google',
+     {failureRedirect: '/users/sign-in'}
+     ), userController.createSession);
+// once user account is verfied by using the call for "router.get('/auth/google')", then google will call the callback url('/auth/google/callback')
+// menitioned in line above, then we will use our passport-google-out-strategy to check whether user is verfied or not using google
+// account
 
 module.exports = router;
