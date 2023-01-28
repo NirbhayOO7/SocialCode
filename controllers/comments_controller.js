@@ -1,5 +1,6 @@
 const { now } = require('mongoose');
 const Comment = require('../models/comment');
+const commentMailer = require('../mailers/comments_mailer');
 const Post = require('../models/post');
 
 // module.exports.create = function(req, res){
@@ -63,10 +64,13 @@ module.exports.create = async function(req, res){
 
             post.comments.push(comment); //push is a command of mongodb
             post.save(); //save tells the database that this is the final result save it in the database(before saving that data, that data is just present in memory).
-            
+
+            // Similar for comments to fetch the user's id!
+            comment = await comment.populate([{path:'user', select:'name email'}]);   // this query will populate only the name of user not any other field of user. 
+            commentMailer.newComment(comment);
+
             if (req.xhr){
-                // Similar for comments to fetch the user's id!
-                comment = await comment.populate([{path:'user', select:'name'}]);   // this query will populate only the name of user not any other field of user. 
+                
     
                 return res.status(200).json({
                     data: {

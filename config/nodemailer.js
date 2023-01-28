@@ -10,20 +10,21 @@ let transporter = nodemailer.createTransport({
     // if true the connection will use TLS when connecting to server. If false (the default) then TLS is used if server supports the STARTTLS extension. In most cases set this value to true if you are connecting to port 465. For port 587 or 25 keep it false
     auth: {
         user: "uchihanirbhay02@gmail.com",
-        pass: "05296202A!e"
+        pass: "yhzriybpxclgvahk"
     }
 });
 
 let renderTemplate = (data, relativePath) =>{
     let mailHTML;
-    ejs.renderFile(path.join(__dirname, '../views/mailers', relativePath)) // relativePath is the location from where this function is being called.
-    data,
-    function(err, template){
-        if(err){console.log('error in rendering template'); return;};
+    ejs.renderFile(
+        path.join(__dirname, '../views/mailers', relativePath), // relativePath is the location from where this function is being called.
+        data,
+        function(err, template){
+            if(err){console.log('error in rendering template', err); return;};
 
-        mailHTML = template;
-    }
-
+            mailHTML = template;
+        }
+    )
     return mailHTML;
 }
 

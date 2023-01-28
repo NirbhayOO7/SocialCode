@@ -20,7 +20,7 @@ router.get('/sign-out',userController.destroySession);
 router.post('/update/:id', passport.checkAuthentication, userController.update);
 
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']})); // this call will sent the call to google for users vefication.
-//scope defines the data which we want from google to return after user verfication is done out server.
+//scope defines the data which we want from google to return after user verfication is done from google server.
 router.get('/auth/google/callback', passport.authenticate(
     'google',
      {failureRedirect: '/users/sign-in'}
