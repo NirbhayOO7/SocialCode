@@ -1,6 +1,8 @@
 const { now } = require('mongoose');
 const Comment = require('../models/comment');
 const commentMailer = require('../mailers/comments_mailer');
+const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment_email_worker');
 const Post = require('../models/post');
 
 // module.exports.create = function(req, res){
@@ -67,7 +69,15 @@ module.exports.create = async function(req, res){
 
             // Similar for comments to fetch the user's id!
             comment = await comment.populate([{path:'user', select:'name email'}]);   // this query will populate only the name of user not any other field of user. 
-            commentMailer.newComment(comment);
+            // commentMailer.newComment(comment);
+
+            let job = queue.create('emails', comment).save(function(err){
+                if(err){
+                    console.log('Error in emails jobs to the queue', err);
+                }
+
+                console.log('job enqueued', job.id);
+            })
 
             if (req.xhr){
                 

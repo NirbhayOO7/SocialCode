@@ -150,3 +150,9 @@ module.exports.update = async function(req, res){
         return res.status(401).send('Unauthorized');
     }
 }
+
+module.exports.resetPassword = function(req, res){
+    return res.render('user_reset_password', {
+        title: 'SocailCode | Reset-Password'
+    });
+}

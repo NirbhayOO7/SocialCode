@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const storage = multer.diskStorage({  // in this line we have defined that we are using disk storage to save the uploaded file.
-    destination: function (req, file, cb) { // destination filed will define where the uploaded files will be saved.
+    destination: function (req, file, cb) { // destination field will define where the uploaded files will be saved.
       cb(null, path.join(__dirname , '..' , AVATAR_PATH));
     },
     filename: function (req, file, cb) { // filename field is used to define the filename by which the uploaded file will be saved.
