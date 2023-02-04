@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 8000;
 const db = require('./config/mongoose');
+const env = require('dotenv');
 
 // install express-session to create the cookies session and encrypted the cookie 
 const session = require('express-session');

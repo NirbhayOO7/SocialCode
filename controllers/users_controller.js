@@ -155,12 +155,14 @@ module.exports.update = async function(req, res){
     }
 }
 
+// below action would take place once user click on forgot/reset password 
 module.exports.forgotPassword = function(req, res){
     return res.render('user_forgot_password', {
         title: 'SocailCode | Reset-Password'
     });
 }
 
+// once user submit the request for changing password by mentioning his email id, then take below action and create token and send mail to user with link attached in email.
 module.exports.resetPassword = async function(req, res){
 
     try{
@@ -203,6 +205,7 @@ module.exports.resetPassword = async function(req, res){
     }
 }
 
+// once user click on the the link which was sent on his mail to change password, below action would happen 
 module.exports.changePasswordLink = async function(req, res){
 
     try{
@@ -219,9 +222,10 @@ module.exports.changePasswordLink = async function(req, res){
     }
 }
 
+
+// once user submit the new password with confirm password below action would take place 
 module.exports.submitChangePassword = async function(req, res){
     
-
     try{
         // console.log('Under submit password change');
         if(req.body.password == req.body.confirm_password){
