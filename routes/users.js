@@ -29,6 +29,12 @@ router.get('/auth/google/callback', passport.authenticate(
 // menitioned in line above, then we will use our passport-google-out-strategy to check whether user is verfied or not using google
 // account
 
-router.get('/forgot-password', userController.resetPassword);
+router.get('/forgot-password', userController.forgotPassword);
+
+router.post('/reset-password', userController.resetPassword);
+
+router.get('/change-password-link/:id', userController.changePasswordLink);
+
+router.post('/submit-password-change/:id', userController.submitChangePassword);
 
 module.exports = router;

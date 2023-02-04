@@ -1,5 +1,9 @@
 const User = require('../models/user');
-
+const Token = require('../models/reset_access_token');
+const crypto = require('crypto');
+const queue = require('../config/kue');
+const accessTokenEmailWorker = require('../workers/access_token_email_worker');
+const resertPasswordMailer = require('../mailers/resetpassword_mailer');
 const path = require('path');
 
 const fs = require('fs');
@@ -151,8 +155,102 @@ module.exports.update = async function(req, res){
     }
 }
 
-module.exports.resetPassword = function(req, res){
-    return res.render('user_reset_password', {
+module.exports.forgotPassword = function(req, res){
+    return res.render('user_forgot_password', {
         title: 'SocailCode | Reset-Password'
     });
+}
+
+module.exports.resetPassword = async function(req, res){
+
+    try{
+
+        let user = await User.findOne({email: req.body.email});
+
+        if(user){
+
+            let accessToken = await Token.create({
+                user: user._id,
+                access_token: crypto.randomBytes(20).toString('hex'),
+                isValid: true
+            });
+
+            accessToken = await accessToken.populate([{path:'user', select:'name email'}]);
+
+            // console.log('accessToken',accessToken);
+
+            let job = queue.create('email_access_token', accessToken).save(function(err){
+                if(err){
+                    console.log('Error in emails jobs to the queue', err);
+                }
+
+                console.log('job enqueued', job.id);
+            });
+
+            req.flash('success', 'Please check your mail to reset password');
+
+            return res.redirect('/');
+        }
+        else{
+            req.flash('error', 'email id does not exist');
+            // console.log('inside resetPassword');
+            return res.redirect('back');
+        }
+    }catch(err){
+        req.flash('error',err);
+        console.log('Error', err);
+        return res.redirect('back');
+    }
+}
+
+module.exports.changePasswordLink = async function(req, res){
+
+    try{
+        let accessToken = await Token.findOne({access_token: req.params.id});
+            // console.log('access token', accessToken);
+            return res.render('change_password_page',{
+                title: 'Change your password',
+                accessToken: accessToken
+        });
+    }catch(err){
+        req.flash('error',err);
+        console.log('Error', err);
+        return res.redirect('back');
+    }
+}
+
+module.exports.submitChangePassword = async function(req, res){
+    
+
+    try{
+        // console.log('Under submit password change');
+        if(req.body.password == req.body.confirm_password){
+
+            // console.log('Under submit password change and password and confirm password matched');
+            let accessToken = await Token.findOne({access_token: req.params.id}).populate('user');
+
+            // console.log(accessToken);
+            if(accessToken.isValid){
+                accessToken.user.password = req.body.password;
+
+                accessToken.isValid = false;
+                accessToken.user.save();
+                accessToken.save();
+
+                // console.log('user password and access token modified',accessToken);
+                req.flash('success', 'Password changed successfully');
+                return res.redirect('/users/sign-in');
+            }
+        }
+        else{
+            req.flash('error', 'password and confirm password does not match');
+            return res.redirect('back');
+        }
+
+    }catch(err){
+        req.flash('error',err);
+        console.log('Error', err);
+        return res.redirect('back');
+    }
+
 }

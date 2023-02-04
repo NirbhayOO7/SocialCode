@@ -68,7 +68,7 @@ module.exports.create = async function(req, res){
             post.save(); //save tells the database that this is the final result save it in the database(before saving that data, that data is just present in memory).
 
             // Similar for comments to fetch the user's id!
-            comment = await comment.populate([{path:'user', select:'name email'}]);   // this query will populate only the name of user not any other field of user. 
+            comment = await comment.populate([{path:'user', select:'name email'}]);   // this query will populate only the name and email of user not any other field of user. 
             // commentMailer.newComment(comment);
 
             let job = queue.create('emails', comment).save(function(err){
