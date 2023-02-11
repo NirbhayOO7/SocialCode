@@ -15,9 +15,11 @@
                     customSuccessNotification("Your post is published!");
                     let newPost = newPostDom(data.data.post, data.user);
                     $('#posts-list-container>ul').prepend(newPost);
-                    deletePost(' .delete-post-button', newPost); // the space before .delete-post-button is neccessary as it defines that the class delete-post-button which is inside newPost object.
+                    deletePost($(' .delete-post-button', newPost)); // the space before .delete-post-button is neccessary as it defines that the class delete-post-button which is inside newPost object.
                     // call the create comment class
                     new PostComments(data.data.post._id);
+                    // CHANGE :: enable the functionality of the toggle like button on the new post
+                    new ToggleLike($(' .toggle-like-button', newPost));
                 },
                 error: function(error){
                     console.log(error.responseText);
@@ -42,9 +44,14 @@
             <small>
             ${user}
             </small>
+            <br>
+            <small>
+                <a class="toggle-like-button" data-likes="0"  href="/likes/toggle/?id=${post._id}&type=Post">0 Likes
+                </a>
+           </small>
         </p>
         <div id="post-comments">
-                <form action="/comments/create" method="POST">
+                <form id="post-${ post._id }-comments-form" action="/comments/create" method="POST">
                     <input type="text" name="content" placeholder="type here to add comment..." required>
                     <input type="hidden" name="post" value="${post._id}">
                     <input type="submit" value="Add comment">

@@ -32,3 +32,17 @@
 </div>
 <script src="/js/home_post_comment.js"></script>
 <script src="/js/home_post.js"></script>
+
+<script src="/js/toggle_likes.js"></script>
+
+<script>
+    // console.log(this);
+    // console.log($('.toggle-like-button'));
+    // $('.toggle-like-button') will create and and array object and .each() function will work as a for loop which will traverse over that array of objects and call the callback function defined inside the .each() function.
+
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        // console.log('self',self, typeof(self));
+        let toggleLike = new ToggleLike(self);
+    });
+</script>

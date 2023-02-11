@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const test = require('../config/middleware')
+const Like = require('../models/like');
 
 // we will not convert below line of code async await as there is only 1 callback
 module.exports.create = async function(req, res){
@@ -63,9 +64,15 @@ module.exports.destroy = async function(req, res){
         let post = await Post.findById(req.params.id);
 
         if(post.user == req.user.id){
+            // CHANGE :: delete the associated likes for the post and all its comments' likes too
+            await Like.deleteMany({likeable: post, onModel: 'Post'});
+            // console.log({$in: post.comments});
+            await Like.deleteMany({likeable: {$in: post.comments}, onModel: 'Comment'});
+            // $in is used to send the array of values, so $in: post.comments will send the _id(as post.commensts and post.commensts._id both are same) of all the comments made on the post.
             post.remove();
 
             await Comment.deleteMany({post: req.params.id});
+            
 
             if(req.xhr){
                 return res.status(200).json({

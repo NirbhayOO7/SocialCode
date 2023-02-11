@@ -19,14 +19,16 @@ module.exports.toggleLike = async function(req, res){
 
         // check if like already exist 
 
-        let existingLike = Like.findOne({
+        let existingLike = await Like.findOne({
             likeable: req.query.id,
             onModel: req.query.type,
             user: req.user._id
         });
 
+        // console.log('inside likes-controller');
         // if a like already exists then delete it 
         if(existingLike){
+            // console.log('Like already exist',existingLike.likeable, deleted);
             likeable.likes.pull(existingLike._id);  //pull will remove the like present on either post or comment.
             likeable.save();              // after removing the like we will save the likes key present in Post/Comment by .save()
 
@@ -42,6 +44,8 @@ module.exports.toggleLike = async function(req, res){
 
             likeable.likes.push(newLike._id);
             likeable.save();
+
+            // console.log(newLike, deleted);
         }
 
         return res.status(200).json({

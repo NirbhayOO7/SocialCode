@@ -4,6 +4,7 @@ const commentMailer = require('../mailers/comments_mailer');
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
 const Post = require('../models/post');
+const Like = require('../models/like');
 
 // module.exports.create = function(req, res){
 //     //we are checking first if post is already present in our database or not as user can fiddle our code by inspecting the html comment form and then changing the post._id
@@ -80,8 +81,7 @@ module.exports.create = async function(req, res){
             })
 
             if (req.xhr){
-                
-    
+                // console.log('inside comment controller');
                 return res.status(200).json({
                     data: {
                         comment: comment
@@ -113,6 +113,9 @@ module.exports.destroy = async function(req, res){
         if(comment.user == req.user.id){
 
             let postId = comment.post;
+
+            // CHANGE :: destroy the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
 
             comment.remove();
 

@@ -5,7 +5,7 @@ queue.process('emails', function(job, done){   // emails is the type of jobs whi
 
     //so process is a task of Worker, which will keeps checking if any new jobs(emails) is come into the queue if yes, then perfom the function defined as callback in the .process function.
 
-    console.log('emails worker is processing a job', job.data);
+    // console.log('emails worker is processing a job', job.data);
 
     commentsMailer.newComment(job.data);
 
