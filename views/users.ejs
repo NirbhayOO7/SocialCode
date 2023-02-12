@@ -13,4 +13,14 @@
         <!-- else only show the profile user info  -->
         <p><%= profile_user.name%></p>
         <p><%= profile_user.email%></p>
+
+        <% if(!isFriend){%>
+            <form action="/users/friends/add/<%= profile_user.id %>" method="POST">
+                <input type="submit" value="Add Friend">
+            </form>
+        <%}else{%>
+            <form action="/users/friends/remove/<%= profile_user.id %>" method="POST">
+                <input type="submit" value="Remove Friend">
+            </form>
+        <%}%>
     <%}%>

@@ -73,7 +73,7 @@ app.use(session({
     // below part of code is little bit of different because the mongo connect version has been upgraded.
     store: MongoStore.create(
         {
-            mongoUrl: 'mongodb://localhost/SocailCode_devlopment',
+            mongoUrl: 'mongodb://localhost/SocailCode_devlopment_new',
             autoRemove: 'disabled'
         },
         function(err){

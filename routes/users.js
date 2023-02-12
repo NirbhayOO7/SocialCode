@@ -37,4 +37,6 @@ router.get('/change-password-link/:id', userController.changePasswordLink);
 
 router.post('/submit-password-change/:id', userController.submitChangePassword);
 
+router.post('/friends/add/:id', passport.checkAuthentication, userController.addFriend);
+router.post('/friends/remove/:id', passport.checkAuthentication, userController.removeFriend);
 module.exports = router;

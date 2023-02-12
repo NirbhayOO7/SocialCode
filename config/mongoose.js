@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/SocailCode_devlopment');
+// mongoose.connect('mongodb://localhost/SocailCode_devlopment');
+mongoose.connect('mongodb://localhost/SocailCode_devlopment_new');
 
 const db = mongoose.connection;
 

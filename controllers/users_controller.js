@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Token = require('../models/reset_access_token');
+const Friendship = require('../models/friendship');
 const crypto = require('crypto');
 const queue = require('../config/kue');
 const accessTokenEmailWorker = require('../workers/access_token_email_worker');
@@ -8,12 +9,35 @@ const path = require('path');
 
 const fs = require('fs');
 
-module.exports.profile = function(req, res){
-    User.findById(req.params.id, function(err, user){
-        return res.render('users',{
-            title: "User profile",
-            profile_user: user
-        });
+// module.exports.profile = function(req, res){
+//     User.findById(req.params.id, function(err, user){
+//         return res.render('users',{
+//             title: "User profile",
+//             profile_user: user
+//         });
+//     });
+// };
+
+// profile function using async await 
+
+module.exports.profile = async function(req, res){
+
+    let user = await User.findById(req.params.id).populate('friendships');
+
+    let friends = user.friendships;
+
+    let isFriend = false;
+
+    friends.forEach(element => {
+        if(element.to_user._id == req.user.id){
+            isFriend = true;
+        }
+    });
+
+    return res.render('users', {
+        title: `${user.name} profile`,
+        profile_user: user,
+        isFriend: isFriend
     });
 };
 
@@ -257,4 +281,67 @@ module.exports.submitChangePassword = async function(req, res){
         return res.redirect('back');
     }
 
+}
+
+// to add user to friends list 
+module.exports.addFriend = async function(req, res){
+    
+    try{
+        console.log('Inside user controller add friend');
+
+        let friend1 = await Friendship.create({
+            from_user: req.user.id,
+            to_user: req.params.id
+        });
+
+        let friend2 = await Friendship.create({
+            from_user: req.params.id,
+            to_user: req.user.id
+        });
+
+        let from_user = await User.findById(req.user.id);
+        let to_user = await User.findById(req.params.id);
+
+        // console.log(from_user);
+        from_user.friendships.push(friend1);
+        from_user.save();
+        to_user.friendships.push(friend2);
+        to_user.save();
+
+        return res.redirect('back');
+
+    }catch(err){
+        req.flash('error',err);
+        console.log('Error', err);
+        return res.redirect('back');
+    }
+    
+};
+
+// to remove user from friend list 
+module.exports.removeFriend = async function(req, res){
+
+    try{
+        console.log('Inside user controller remove friends');
+
+        let friend1 = await Friendship.findOneAndRemove({
+            from_user: req.user.id,
+            to_user: req.params.id
+        });
+
+        let friend2 = await Friendship.findOneAndRemove({
+            from_user: req.params.id,
+            to_user: req.user.id
+        });
+
+        await User.findByIdAndUpdate(req.user.id, {$pull: {friendships: friend1._id}});
+        await User.findByIdAndUpdate(req.params.id, {$pull: {friendships: friend2._id}});
+
+        return res.redirect('back');
+
+    }catch(err){
+        req.flash('error',err);
+        console.log('Error', err);
+        return res.redirect('back');
+    }
 }

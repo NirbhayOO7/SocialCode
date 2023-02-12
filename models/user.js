@@ -4,6 +4,7 @@ const multer = require('multer'); // multer module is installed using npm, it wi
 // Multer will not process any form which is not multipart (multipart/form-data)
 
 const path = require('path');
+const Friendship = require('./friendship');
 
 const AVATAR_PATH = path.join('/uploads/users/avatars');
 
@@ -23,9 +24,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avatar: { // avatar field in the database will only hold the address of the uploaded not the acutal file
+    avatar: { // avatar field in the database will only hold the address of the uploaded files not the acutal file
         type : String
-    }
+    },
+    friendships: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Friendship'
+      }
+    ]
 },{
     timestamps: true
 });
