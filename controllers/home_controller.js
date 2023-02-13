@@ -54,11 +54,29 @@ module.exports.home = async function(req, res){
                         }).populate('likes');
         
         let users = await User.find({});
+        
+        if(req.isAuthenticated())
+        {
+            let friends = await User.findById(req.user._id).populate({
+                path: 'friendships',
+                populate:{
+                    path:'to_user'
+                }
+            });
+
+            // console.log(friends.friendships[0].to_user.name);
+            return res.render('home', {
+                title: "SocialCode | Home",
+                posts: post,
+                all_users: users,            // user data is sent to homepage to show list of users
+                friends: friends.friendships
+            });
+        }
 
         return res.render('home', {
             title: "SocialCode | Home",
             posts: post,
-            all_users: users            // user data is sent to homepage to show list of friends
+            all_users: users,            // user data is sent to homepage to show list of users
         });
     }catch(err){
         console.log('Error', err);

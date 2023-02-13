@@ -33,6 +33,30 @@ class ToggleLike{
                     console.log(err.responseText);
                 }
             });
+
+            // this is a new way of writing ajax which you might've studied, it looks like the same as promises, above ajax call can also be written like this.
+            // $.ajax({
+            //     type: 'POST',
+            //     url: $(self).attr('href'),
+            // })
+            // .done(function(data) {
+            //     let likesCount = parseInt($(self).attr('data-likes'));
+            //     console.log(likesCount);
+            //     if (data.data.deleted == true){
+            //         likesCount -= 1;
+                    
+            //     }else{
+            //         likesCount += 1;
+            //     }
+
+
+            //     $(self).attr('data-likes', likesCount);
+            //     $(self).html(`${likesCount} Likes`);
+
+            // })
+            // .fail(function(errData) {
+            //     console.log('error in completing the request');
+            // });
         })
     }
 };

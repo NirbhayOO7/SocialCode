@@ -6,9 +6,18 @@
         padding: 10px;
     }
 
-    #user-friends{
+    #users-friends{
         width: 30%;
         padding: 10px;
         border-left: 1px solid lightgray;
+
+        #all-users{
+            height: 50%;
+        }
+
+        #friends{
+            height: 50%;
+            border-top: 1px solid lightgrey;
+        }
     }
 }
