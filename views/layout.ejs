@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/css/layout.css">
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
+        <link rel="stylesheet" href="/css/chat_box.css">
         <%- style %>
     </head>
     <body>
@@ -22,7 +23,7 @@
 
         <script>
             // we have used noty to style out flash messages and also incude two cdn links for noty first link for css and second for js using script 
-            <% if(flash.success && flash.success.length>0) {%>
+            <% if(flash.success && flash.success.length>0) { %>
                 new Noty({
                     theme :'relax',
                     type : 'success',

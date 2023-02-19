@@ -43,6 +43,8 @@
             </div>
         <%}%>
     </section>
+
+    <%- include('_chat_box') -%>
 </div>
 <script src="/js/home_post_comment.js"></script>
 <script src="/js/home_post.js"></script>
@@ -60,3 +62,12 @@
         let toggleLike = new ToggleLike(self);
     });
 </script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js"></script> -->
+<script   src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js"   integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg=="   crossorigin="anonymous"   referrerpolicy="no-referrer" ></script>
+<script src="/js/chat_engine.js"></script>
+
+<% if(locals.user){ %>
+<script>
+    new chatEngine('user-chat-box', '<%= locals.user.email %>');
+</script>
+<% } %>
