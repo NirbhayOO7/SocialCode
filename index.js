@@ -6,7 +6,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 8000;
 const db = require('./config/mongoose');
-const env = require('dotenv');
+const dotenv = require('dotenv');
+const env = require('./config/environment')
+const path = require('path');
 
 // setup the chat server to be used with socket.io(we can also write below lines in different file for scalibility purpose)
 const chatServer = require('http').Server(app);
@@ -35,10 +37,10 @@ const { Strategy } = require('passport-local');
 const flash = require('connect-flash'); // intall connect flash using npm, connect flash is used to show flash messages.
 const customMware = require('./config/middleware');  //we will use this to setup the flash message in 'res'( because in controllers we setup the flash messages in req)
 
-// we need to include sassMiddleware using middlware befor anything else ass we need the css files which converted from scss to be processed by other functionalites of server and then present it in the browser 
+// we need to include sassMiddleware using middlware before anything else as we need the css files which converted from scss to be processed by other functionalites of server and then present it in the browser 
 app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
+    src: path.join(__dirname, env.asset_path,'scss'),
+    dest: path.join(__dirname, env.asset_path,'css'),
     debug : true,
     outputStyle:'extended',
     prefix: '/css'
@@ -48,7 +50,7 @@ app.use(sassMiddleware({
 app.use(cookieParser());
 
 // below line will set the expressjs to look for any static at below mentioned location like css js images and etc
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 
 // extract styles and scripts from sub pages into the layout 
 app.set('layout extractStyles', true);
@@ -68,7 +70,7 @@ app.set('/views', './views');
 app.use(session({
     name: 'socailcode',
     // todo change the secret befor deploying in production 
-    secret: 'blahsomething',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -88,7 +90,7 @@ app.use(session({
     )
 }));
 
-// passport.initialize() is a middle-ware that initialises Passport. 
+// passport.initialize() is a middleware that initialises Passport. 
 app.use(passport.initialize());
 // console.log('** in between**');
 // passport.session() is another middleware that alters the request object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.

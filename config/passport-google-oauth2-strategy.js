@@ -1,6 +1,8 @@
 const passport = require('passport');
-const env = require('dotenv');
-env.config();
+const dotenv = require('dotenv');
+dotenv.config();
+
+const env = require('./environment');
 const googelStrategy = require('passport-google-oauth').OAuth2Strategy;
 const crypto = require('crypto'); // crypto is used to generate random password for the newly created user although we do not use 
 // this credentails for login.
@@ -9,9 +11,9 @@ const User = require('../models/user');
 
 // tell passport to use a new strategy for google login 
 passport.use(new googelStrategy({
-        clientID: process.env.ClientId,
-        clientSecret: process.env.clientSecret,
-        callbackURL:"http://localhost:8000/users/auth/google/callback"
+        clientID: env.google_client_id,
+        clientSecret: env.google_client_secret,
+        callbackURL: env.google_call_back_url
     },
     // get the clientId, clientSecret and callbackURL from the new created project in console.cloud.google.com
     function(accessToken, refreshToken, profile, done){
