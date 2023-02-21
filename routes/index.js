@@ -17,4 +17,6 @@ router.use('/comments', require('./comments'));
 router.use('/likes', require('./likes'));
 router.use('/api', require('./api'));
 
+// console.log("under router env variable",process.env.Asset_Path);
+
 module.exports = router;
