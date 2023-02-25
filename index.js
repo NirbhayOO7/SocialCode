@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const port = 8000;
 const db = require('./config/mongoose');
 const dotenv = require('dotenv');
-const env = require('./config/environment')
+const env = require('./config/environment');
+const logger = require('morgan'); // this npm package is used to create the log files.
 const path = require('path');
 
 // setup the chat server to be used with socket.io(we can also write below lines in different file for scalibility purpose)
@@ -38,19 +39,23 @@ const flash = require('connect-flash'); // intall connect flash using npm, conne
 const customMware = require('./config/middleware');  //we will use this to setup the flash message in 'res'( because in controllers we setup the flash messages in req)
 
 // we need to include sassMiddleware using middlware before anything else as we need the css files which converted from scss to be processed by other functionalites of server and then present it in the browser 
-app.use(sassMiddleware({
-    src: path.join(__dirname, env.asset_path,'scss'),
-    dest: path.join(__dirname, env.asset_path,'css'),
-    debug : true,
-    outputStyle:'extended',
-    prefix: '/css'
-}));
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path,'scss'),
+        dest: path.join(__dirname, env.asset_path,'css'),
+        debug : true,
+        outputStyle:'extended',
+        prefix: '/css'
+    }));
+}
 
 // use middleware to setup cookieParser 
 app.use(cookieParser());
 
 // below line will set the expressjs to look for any static at below mentioned location like css js images and etc
 app.use(express.static(env.asset_path));
+
+app.use(logger(env.morgan.mode, env.morgan.options)); // middle is used to setup the morgan. See morgan js package on internet for more details
 
 // extract styles and scripts from sub pages into the layout 
 app.set('layout extractStyles', true);
