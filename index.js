@@ -3,6 +3,7 @@ const express = require('express');
 // install cookie-parser module through npm to use cookie in our webpage
 const cookieParser = require('cookie-parser');
 const app = express();
+require('./config/view-helpers')(app);
 const bodyParser = require('body-parser');
 const port = 8000;
 const db = require('./config/mongoose');

@@ -6,10 +6,15 @@
         <!-- even though the layout.css exist in assets folder we didn't mention the assets it because we set the express.static file in index.js file of socialcode -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <link rel="stylesheet" href="/css/layout.css">
-        <link rel="stylesheet" href="/css/header.css">
+        <!-- <link rel="stylesheet" href="/css/layout.css"> -->
+        <!-- <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
-        <link rel="stylesheet" href="/css/chat_box.css">
+        <link rel="stylesheet" href="/css/chat_box.css"> -->
+
+        <link rel="stylesheet" href="<%= assetPath('css/layout.css') %>">
+        <link rel="stylesheet" href="<%= assetPath('css/header.css') %>">
+        <link rel="stylesheet" href="<%= assetPath('css/footer.css') %>">
+        <link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>">
         <%- style %>
     </head>
     <body>

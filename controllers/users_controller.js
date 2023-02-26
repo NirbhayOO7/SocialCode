@@ -48,6 +48,7 @@ module.exports.signIn = function(req, res){
         return res.redirect('/users/profile');
     }
 
+    // console.log('sign-in', req.user);
     return res.render('user_sign_in', {
         title: 'SocailCode | Sign In'
     });
@@ -108,6 +109,7 @@ module.exports.create = function(req, res){
 // sing in and create session 
 module.exports.createSession = function(req, res){
     req.flash('success', 'Logged in successfully');
+    // console.log('createSession req.user', req.user);
     return res.redirect('/');
 }
 

@@ -75,6 +75,8 @@ passport.setAuthenticatedUser = function(req, res, next){
     {
         // req.user contains the current signed in user from the session cookie and we are just sending this to locals for the views
         res.locals.user = req.user;
+
+        // the user key inside the req variable is created with the help of passport module, once the user is verified using the done callback function mentioned in line 37.
     }
     
     next();

@@ -6,9 +6,9 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass')(require('node-sass'));
 const cssnano = require('gulp-cssnano');
-// const imagemin = require('gulp-imagemin');  //issue
+const imagemin = require('gulp-imagemin');  //issue
 const uglify = require('gulp-uglify-es').default;
-// const del = require('del');                             //issue
+const del = require('del');                             //issue
 const rev = require('gulp-rev');
 
 //final code for css is this.
@@ -64,11 +64,12 @@ gulp.task('images', (done) =>{
 // empty the public/assets directory
 gulp.task('clean:assets', (done)=>{
     del.sync('./public/assets');
-
     done();
 });
 
-gulp.task('build', gulp.series('clean:assets', 'css', 'js', 'images'), (done) =>{
-    console.log('Building assets')
+gulp.task('build', gulp.series('clean:assets', 'css', 'js', 'images'), function(done){
+    console.log('Building assets');
     done();
 });
+
+// while running gulp build the js task is not creating rev-manifest for js. So we have to manually run the gulp js
