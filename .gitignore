@@ -5,4 +5,5 @@ config/environment.js
 public/assets/css/
 public/assets/js/
 public/assets/images/
-
+public/assets/rev-manifest.json
+public/rev-manifest.json
