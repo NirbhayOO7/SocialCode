@@ -2,4 +2,7 @@ node_modules/
 .env
 production_logs/
 config/environment.js
+public/assets/css/
+public/assets/js/
+public/assets/images/
 
