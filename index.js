@@ -56,7 +56,7 @@ app.use(cookieParser());
 // below line will set the expressjs to look for any static at below mentioned location like css js images and etc
 app.use(express.static(env.asset_path));
 
-app.use(logger(env.morgan.mode, env.morgan.options)); // middle is used to setup the morgan. See morgan js package on internet for more details
+app.use(logger(env.morgan.mode, env.morgan.options)); // middleware is used to setup the morgan. See morgan js package on internet for more details
 
 // extract styles and scripts from sub pages into the layout 
 app.set('layout extractStyles', true);
@@ -71,7 +71,7 @@ app.set('view engine', 'ejs');
 
 app.set('/views', './views');
 
-
+// visit this link to check how session works along with cookies to store the user credentials : https://www.section.io/engineering-education/session-management-in-nodejs-using-expressjs-and-express-session/
 // encrypt the id which we save in the session cookie using serializeUser 
 app.use(session({
     name: 'socailcode',

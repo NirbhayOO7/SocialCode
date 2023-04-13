@@ -6,6 +6,7 @@ module.exports = (app) =>{
 
     app.locals.assetPath = function(filePath){
         if(env.name == 'development'){
+            filePath ='/'+filePath;
             return filePath;
         }
 

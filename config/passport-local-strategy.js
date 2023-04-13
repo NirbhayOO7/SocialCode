@@ -1,6 +1,7 @@
 // install the passport module to use passport 
 const passport = require('passport');
 
+// see in-depth process flow of authentication process using passport js : http://toon.io/understanding-passportjs-authentication-flow/
 
 // install the passport-local module to use passport-local 
 const LocalStrategy = require('passport-local').Strategy;
@@ -73,6 +74,7 @@ passport.setAuthenticatedUser = function(req, res, next){
 
     if(req.isAuthenticated())
     {
+        // console.log('*****setting the req.user to locals**********');
         // req.user contains the current signed in user from the session cookie and we are just sending this to locals for the views
         res.locals.user = req.user;
 

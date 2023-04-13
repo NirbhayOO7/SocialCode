@@ -38,7 +38,7 @@ const User = require('../models/user');
 
 module.exports.home = async function(req, res){
 
-    // console.log('home',req.user);   
+    console.log('home',req.user);   
     try{                                        // try and cath used for error handling.
         let post = await Post.find({})
                         .sort('-createdAt')       //to sort the post acording to createdAt field, recent to oldest
