@@ -40,10 +40,10 @@ IMAGES OF SOCIALCODE WEB-APPLICATION.
 ![Forget Password_page](./Images_Of_SocialCode/Forget_Password.png)
 
 6. Mail Sent to reset Your password.
-![Mail image for Password reset.](.Images_Of_SocialCode/Forget_Password_Link_Sent_to_Mail.png)
+![Mail image for Password reset.](./Images_Of_SocialCode/Forget_Password_Link_Sent_to_Mail.png)
 
 7. Reset Password Page(This page will open when you click to link sent on mail for forget password)
-![Reset Password](.Images_Of_SocialCode/Reset_Password_Page.png)
+![Reset Password](./Images_Of_SocialCode/Reset_Password_Page.png)
 
 8. Your Profile Page(Here you can edit your details while you are logged in).
 ![Profile Page](./Images_Of_SocialCode/Profile_Page.png)
@@ -52,7 +52,7 @@ IMAGES OF SOCIALCODE WEB-APPLICATION.
 ![Other User Profile Page](./Images_Of_SocialCode/Other_User_Profile_Page.png)
 
 10. Notification recieved for each administrative actions.
-![Notification](.Images_Of_SocialCode/Notification.png)
+![Notification](./Images_Of_SocialCode/Notification.png)
 
 11. Mail recieved to user if they post a comment.
 ![Mail Image](./Images_Of_SocialCode/Mail_Recieved_For_Posting_Comment.png)
