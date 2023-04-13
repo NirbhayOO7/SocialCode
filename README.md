@@ -22,5 +22,37 @@ Other Features about SocialCode
 IMAGES OF SOCIALCODE WEB-APPLICATION.
 
 1. Homepage(When user in not logged in.).
+![Homepage](./Images_Of_SocialCode/Homepage1.png)
+
+2. Homepage(When user is logged in.).
 ![Homepage](./Images_Of_SocialCode/Homepage.png)
-2.Sing
+
+2. Sign-Up Page
+![SingUp_Page](./Images_Of_SocialCode/Sing_Up.png)
+
+3. Sign-up using google account.
+![SignUp_Page](./Images_Of_SocialCode/Sing_Up_Using_Google_Account.png)
+
+4. Sing-In Page/ Sign-In using googel account.
+![SingIn_page](./Images_Of_SocialCode/Sing_Ip.png)
+
+5. Forget Password Page
+![Forget Password_page](./Images_Of_SocialCode/Forget_Password.png)
+
+6. Mail Sent to reset Your password.
+![Mail image for rappsword reset.](./Forget_Passoword_Link_Sent_to_Mail.png)
+
+7. Reset Password Page(This page will open when you click to link sent on mail for forget password)
+![Reset Password](./Reset_Password_Page.png)
+
+8. Your Profile Page(Here you can edit your details while you are logged in).
+![Profile Page](./Images_Of_SocialCode/Profile_Page.png)
+
+9. Other User Profile Page(CLick on Add friend to add in your friedn list and show it in your friends list).
+![Other User Profile Page](./Images_Of_SocialCode/Other_User_Profile_Page.png)
+
+10. Notification recieved for each administrative actions.
+![Notification](./Notification.png)
+
+11. Mail recieved to user if they post a comment.
+![Mail Image](./Images_Of_SocialCode/Mail_Recieved_For_Posting_Comment.png)
