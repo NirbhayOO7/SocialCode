@@ -22,5 +22,5 @@ Other Features about SocialCode
 IMAGES OF SOCIALCODE WEB-APPLICATION.
 
 1. Homepage(When user in not logged in.).
-image.png
+![Homepage](./Images_Of_SocialCode/Homepage.png)
 2.Sing
