@@ -59,11 +59,11 @@ module.exports.signUp = function(req, res){
     // req.isAuthenticated is functionality of passport module 
     if(req.isAuthenticated()) 
     {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
 
     return res.render('user_sign_up', {
-        title: 'SocailCode | Sign Un'
+        title: 'SocailCode | Sign Up'
     });
 };
 

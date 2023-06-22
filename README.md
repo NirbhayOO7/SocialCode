@@ -1,9 +1,9 @@
-SOCIALCODE.
+# SOCIALCODE.
 
 SocialCode is web-platform where use can share there contents like post, articles and etc.
 User can then provide comments on the post, like the post or the comments on the post.
 
-Other Features about SocialCode
+### Other Features about SocialCode
 1. Chat-room included for one to one interaction.
 2. Users can Sign-up/Sign-In operation.
 3. Authentication for login into the socailcode application.
@@ -19,7 +19,7 @@ Other Features about SocialCode
 6. Mail notification for each comment posted by the user.
 
 
-IMAGES OF SOCIALCODE WEB-APPLICATION.
+## IMAGES OF SOCIALCODE WEB-APPLICATION.
 
 1. Homepage(When user in not logged in.).
 ![Homepage](./Images_Of_SocialCode/Homepage1.png)
@@ -56,3 +56,19 @@ IMAGES OF SOCIALCODE WEB-APPLICATION.
 
 11. Mail recieved to user if they post a comment.
 ![Mail Image](./Images_Of_SocialCode/Mail_Recieved_For_Posting_Comment.png)
+
+
+## TECH STACK USED IN PROJECT.
+1. HTML
+2. CSS/SCSS
+3. Javascript/jquery
+4. AJAX
+5. NodeJs
+6. ExpressJs
+7. MongoDB
+8. PassportJs- Loacl Auth, Google OAuth2, JWT Auth.
+9. Nodemailer
+10. Redis
+11. Gulp.Js
+12. Web Socket
+13. Morgan

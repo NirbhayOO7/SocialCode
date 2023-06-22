@@ -63,6 +63,7 @@ passport.deserializeUser(function(id, done){
 
 passport.checkAuthentication = function(req, res, next){
     // if user is signed in, then pass on the request to the next function(controller's action) 
+    // console.log('*****check Authentication**********');
     if(req.isAuthenticated()){
         return next();
     }
@@ -71,7 +72,7 @@ passport.checkAuthentication = function(req, res, next){
 };
 
 passport.setAuthenticatedUser = function(req, res, next){
-
+    // console.log('*****setAuthenticated user**********');
     if(req.isAuthenticated())
     {
         // console.log('*****setting the req.user to locals**********');

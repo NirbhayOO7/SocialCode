@@ -37,7 +37,7 @@ passport.use(new googelStrategy({
                     email: profile.emails[0].value,
                     password: crypto.randomBytes(20).toString('hex')
                 }, function(err, user){
-                    if(err){console.log("error in google-strategy passport", err); return;}
+                    if(err){console.log("error in creating user google-auth", err); return;}
 
                     return done(null, user);
                 })
